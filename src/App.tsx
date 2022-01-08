@@ -1,5 +1,3 @@
-import React from "react";
-// import logo from "./logo.svg";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Container } from "react-bootstrap";
