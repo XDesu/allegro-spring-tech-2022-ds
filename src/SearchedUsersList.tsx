@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
-import { useSearch } from "./SearchContext";
+import { useSearch, useSearchUpdate } from "./SearchContext";
 import { Octokit } from "@octokit/rest";
 import { Endpoints } from "@octokit/types";
 import { RiGithubFill } from "react-icons/ri";
@@ -23,7 +23,7 @@ export default function SearchedUsersList() {
     try {
       const response = await octokit.rest.search.users({
         q: search,
-        per_page: 10,
+        per_page: 15,
       });
       setItems(response.data.items);
       console.log(response);
@@ -58,7 +58,7 @@ export default function SearchedUsersList() {
                 <Card.Text>
                   {item.type === "User" ? "Użytkownik" : "Organizacja"}
                 </Card.Text>
-                <LinkContainer to="/repos">
+                <LinkContainer to={`/repos/${item.login}`}>
                   <Button variant="primary" className="w-100">
                     Repozytoria
                   </Button>

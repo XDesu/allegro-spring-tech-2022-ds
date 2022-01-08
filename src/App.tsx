@@ -18,7 +18,7 @@ export default function App() {
           <article>
             <Routes>
               <Route path="/" element={<SearchedUsersList />} />
-              <Route path="/repos" element={<RepoList />} />
+              <Route path="/repos/:id" element={<RepoList />} />
             </Routes>
           </article>
         </Router>
