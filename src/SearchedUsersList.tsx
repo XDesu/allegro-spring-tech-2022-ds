@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Card, Button } from "react-bootstrap";
+import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import { useSearch } from "./SearchContext";
 import { Octokit } from "@octokit/rest";
 import { Endpoints } from "@octokit/types";
@@ -32,31 +32,39 @@ export default function SearchedUsersList() {
   };
 
   return (
-    <Container fluid className="p-0 text-center">
-      {items.map((item) => (
-        <Card style={{ width: "18rem" }} key={item.id} className="p-3 m-3">
-          <Card.Img variant="top" src={item.avatar_url} />
-          <Card.Body className="text-center">
-            <Card.Title>
-              {item.login}
-              <a
-                href={item.html_url}
-                target="_blank"
-                rel="noreferrer"
-                className="ms-1 fs-2"
-              >
-                <RiGithubFill />
-              </a>
-            </Card.Title>
-            <Card.Text>
-              {item.type === "User" ? "Użytkownik" : "Organizacja"}
-            </Card.Text>
-            <Button variant="primary" className="w-100">
-              Repozytoria
-            </Button>
-          </Card.Body>
-        </Card>
-      ))}
+    <Container fluid className="p-1 text-center d-flex flex-wrap">
+      <Row xs={1} md={2} lg={3} xl={4} xxl={5}>
+        {items.map((item) => (
+          <Col key={item.id}>
+            <Card
+              style={{ width: "25rem", marginBottom: "5rem" }}
+              key={item.id}
+              className="p-3 mx-auto mt-3"
+            >
+              <Card.Img variant="top" src={item.avatar_url} />
+              <Card.Body className="text-center">
+                <Card.Title>
+                  {item.login}
+                  <a
+                    href={item.html_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="ms-1 fs-2"
+                  >
+                    <RiGithubFill />
+                  </a>
+                </Card.Title>
+                <Card.Text>
+                  {item.type === "User" ? "Użytkownik" : "Organizacja"}
+                </Card.Text>
+                <Button variant="primary" className="w-100">
+                  Repozytoria
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
     </Container>
   );
 }
