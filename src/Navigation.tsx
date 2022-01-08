@@ -28,24 +28,29 @@ const Navigation = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse className="navbarScroll">
-          <Form className="d-flex m-3" onSubmit={updateSearch}>
-            <FloatingLabel
-              controlId="floatingInputGrid"
-              label="Nazwa użytkownika"
-              className="float-start"
+          <Nav className="ms-auto">
+            <Form
+              className="d-flex m-3 justify-content-end"
+              onSubmit={updateSearch}
             >
-              <Form.Control
-                type="text"
-                placeholder="username"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                onClick={(e) => setSearch("")}
-              />
-            </FloatingLabel>
-            <Button type="submit" variant="success">
-              Szukaj
-            </Button>
-          </Form>
+              <FloatingLabel
+                controlId="floatingInputGrid"
+                label="Nazwa użytkownika"
+                className="float-start"
+              >
+                <Form.Control
+                  type="text"
+                  placeholder="username"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  onClick={(e) => setSearch("")}
+                />
+              </FloatingLabel>
+              <Button type="submit" variant="success">
+                Szukaj
+              </Button>
+            </Form>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
