@@ -2,23 +2,26 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Navigation from "./Navigation";
+import RepoList from "./RepoList";
 import SearchedUsersList from "./SearchedUsersList";
 import SearchProvider from "./SearchContext";
+import "./App.scss";
 
 export default function App() {
   return (
     <Container fluid className="p-0">
       <SearchProvider>
-        <header>
-          <Navigation />
-        </header>
-        <article>
-          <Router>
+        <Router>
+          <header>
+            <Navigation />
+          </header>
+          <article>
             <Routes>
               <Route path="/" element={<SearchedUsersList />} />
+              <Route path="/repos" element={<RepoList />} />
             </Routes>
-          </Router>
-        </article>
+          </article>
+        </Router>
       </SearchProvider>
     </Container>
   );

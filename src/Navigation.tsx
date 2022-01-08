@@ -6,26 +6,30 @@ import {
   Button,
   Nav,
 } from "react-bootstrap";
-// import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.scss";
 import { useSearchUpdate } from "./SearchContext";
 import React, { useState } from "react";
+import { LinkContainer } from "react-router-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Navigation = () => {
+  const navigate = useNavigate();
   const searchUpdate = useSearchUpdate();
   const [search, setSearch] = useState("allegro");
 
   function updateSearch(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     searchUpdate(search);
+    navigate("/");
   }
 
   return (
     <Navbar collapseOnSelect bg="dark" variant="dark" expand="sm">
       <Container fluid>
-        <Navbar.Brand href="#home" className="m-3 fs-2">
-          Allegro Spring Tech 2k22
-        </Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand className="m-3 fs-2">
+            Allegro Spring Tech 2k22
+          </Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse className="navbarScroll">
           <Nav className="ms-auto">

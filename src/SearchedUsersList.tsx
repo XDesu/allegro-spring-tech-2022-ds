@@ -4,6 +4,7 @@ import { useSearch } from "./SearchContext";
 import { Octokit } from "@octokit/rest";
 import { Endpoints } from "@octokit/types";
 import { RiGithubFill } from "react-icons/ri";
+import { LinkContainer } from "react-router-bootstrap";
 
 type GitUser = Endpoints["GET /search/users"]["response"]["data"]["items"][0];
 
@@ -57,9 +58,11 @@ export default function SearchedUsersList() {
                 <Card.Text>
                   {item.type === "User" ? "Użytkownik" : "Organizacja"}
                 </Card.Text>
-                <Button variant="primary" className="w-100">
-                  Repozytoria
-                </Button>
+                <LinkContainer to="/repos">
+                  <Button variant="primary" className="w-100">
+                    Repozytoria
+                  </Button>
+                </LinkContainer>
               </Card.Body>
             </Card>
           </Col>
