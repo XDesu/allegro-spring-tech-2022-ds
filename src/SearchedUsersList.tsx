@@ -37,7 +37,7 @@ export default function SearchedUsersList() {
         {items.map((item) => (
           <Col key={item.id}>
             <Card
-              style={{ width: "25rem", marginBottom: "5rem" }}
+              style={{ width: "25em", marginBottom: "5rem" }}
               key={item.id}
               className="p-3 mx-auto mt-3"
             >

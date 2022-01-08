@@ -4,10 +4,11 @@ import {
   FloatingLabel,
   Form,
   Button,
+  Nav,
 } from "react-bootstrap";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
-import { useSearch, useSearchUpdate } from "./SearchContext";
+import { useSearchUpdate } from "./SearchContext";
 import React, { useState } from "react";
 
 const Navigation = () => {
@@ -20,30 +21,32 @@ const Navigation = () => {
   }
 
   return (
-    <Navbar bg="dark" variant="dark">
+    <Navbar collapseOnSelect bg="dark" variant="dark" expand="sm">
       <Container fluid>
         <Navbar.Brand href="#home" className="m-3 fs-2">
           Allegro Spring Tech 2k22
         </Navbar.Brand>
-        <Navbar.Text></Navbar.Text>
-        <Form className="d-flex m-3" onSubmit={updateSearch}>
-          <FloatingLabel
-            controlId="floatingInputGrid"
-            label="Nazwa użytkownika"
-            className="float-start"
-          >
-            <Form.Control
-              type="text"
-              placeholder="username"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              onClick={(e) => setSearch("")}
-            />
-          </FloatingLabel>
-          <Button type="submit" variant="success">
-            Szukaj
-          </Button>
-        </Form>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse className="navbarScroll">
+          <Form className="d-flex m-3" onSubmit={updateSearch}>
+            <FloatingLabel
+              controlId="floatingInputGrid"
+              label="Nazwa użytkownika"
+              className="float-start"
+            >
+              <Form.Control
+                type="text"
+                placeholder="username"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                onClick={(e) => setSearch("")}
+              />
+            </FloatingLabel>
+            <Button type="submit" variant="success">
+              Szukaj
+            </Button>
+          </Form>
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );
