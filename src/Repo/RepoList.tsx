@@ -21,6 +21,7 @@ const RepoList = () => {
   const [timerRepos, setTimerRepos] = useState<any>(null);
   const [iPagin, setIPagin] = useState<number>(1);
   const [pagePagin, setPagePagin] = useState<number>(1);
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     getUser();
@@ -44,6 +45,7 @@ const RepoList = () => {
       const responseUser = await octokit.rest.users.getByUsername({
         username: urlName,
       });
+      setError(false);
       setUser(responseUser.data);
       setIPagin(
         Math.ceil((responseUser.data.public_repos as number) / reposOnPage)
@@ -51,6 +53,7 @@ const RepoList = () => {
       console.log(responseUser);
     } catch (error) {
       console.log(error);
+      setError(true);
       setTimerUser(
         setTimeout(() => {
           console.log("timeout");
@@ -95,24 +98,32 @@ const RepoList = () => {
           className="text-center"
         >
           {user === undefined ? (
-            <>
-              Karta użytkownika
+            <Container>
               <Spinner animation="border" role="status" className="s-50 t-50">
                 <span className="visually-hidden">Loading...</span>
               </Spinner>
-            </>
+              <br />
+              <a>Użytkownik</a>
+            </Container>
           ) : (
             <UserCardRepos user={user} />
           )}
         </Col>
         <Col sm="12" md="7" lg="7" xl="9" xxl="9">
-          {repos === undefined ? (
-            <>
-              Repozytoria użytkownika
-              <Spinner animation="border" role="status" className="s-50 t-50">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </>
+          {repos.length == 0 ? (
+            error ? (
+              <Container className="w-100 text-center pt-4">
+                <h1>Nie znaleziono repozytoriów</h1>
+              </Container>
+            ) : (
+              <Container className="w-100 text-center pt-4">
+                <Spinner animation="border" role="status" className="s-50 t-50">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+                <br />
+                <a>Repozytoria</a>
+              </Container>
+            )
           ) : (
             <Container className="justify-content-center">
               <RepoCardRepos repos={repos} />

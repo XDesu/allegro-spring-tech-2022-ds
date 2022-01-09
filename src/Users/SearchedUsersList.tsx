@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { Container, Card, Button, Row, Col, Spinner } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 import { useSearch } from "../Context/SearchContext";
 import { Octokit } from "@octokit/rest";
 import { Endpoints } from "@octokit/types";
-import { RiGithubFill } from "react-icons/ri";
-import { LinkContainer } from "react-router-bootstrap";
 import UserCardUsers from "./UserCardUsers";
 
 type GitUser = Endpoints["GET /search/users"]["response"]["data"]["items"][0];
