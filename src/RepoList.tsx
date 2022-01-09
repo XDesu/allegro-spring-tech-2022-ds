@@ -3,6 +3,7 @@ import { Octokit } from "@octokit/rest";
 import { Endpoints } from "@octokit/types";
 import { Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import UserCardRepos from "./UserCardRepos";
+import RepoCardRepos from "./RepoCardRepos";
 
 type GitUser = Endpoints["GET /users/{username}"]["response"]["data"];
 type GitRepo =
@@ -92,31 +93,16 @@ const RepoList = () => {
           )}
         </Col>
         <Col sm="10" md="6" lg="6" xl="6" xxl="6">
-          <Container fluid className="p-0 d-flex flex-wrap">
-            {repos.map((repo) => (
-              <Card style={{ width: "12rem", height: "18rem" }} className="m-3">
-                <Card.Body>
-                  <Card.Title>{repo.name}</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">
-                    {repo.stargazers_count}
-                  </Card.Subtitle>
-                  <Card.Text
-                    className="overflow-auto"
-                    style={{ height: "9rem" }}
-                  >
-                    {repo.description === null
-                      ? "Brak opisu"
-                      : repo.description}
-                  </Card.Text>
-                  <Container className="text-center">
-                    <Button href={repo.html_url} className="px-2">
-                      Zobacz repo
-                    </Button>
-                  </Container>
-                </Card.Body>
-              </Card>
-            ))}
-          </Container>
+          {repos === undefined ? (
+            <>
+              Repozytoria użytkownika
+              <Spinner animation="border" role="status" className="s-50 t-50">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </>
+          ) : (
+            <RepoCardRepos repos={repos} />
+          )}
         </Col>
       </Row>
     </Container>
