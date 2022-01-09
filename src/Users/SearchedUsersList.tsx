@@ -42,7 +42,7 @@ export default function SearchedUsersList() {
   };
 
   return (
-    <Container fluid className="p-1 text-center d-flex flex-wrap">
+    <Container fluid className="p-1 text-center pt-5">
       <Row
         xs={1}
         md={2}
@@ -52,9 +52,9 @@ export default function SearchedUsersList() {
         className="justify-content-center"
       >
         {items.map((item) => (
-          <Col key={item.id}>
+          <Col key={item.id} className="">
             <Card
-              style={{ width: "25em", marginBottom: "5rem" }}
+              style={{ width: "25rem", marginBottom: "5rem" }}
               key={item.id}
               className="p-3 mx-auto mt-3"
             >
