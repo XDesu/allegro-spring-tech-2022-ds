@@ -2,9 +2,9 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Navigation from "./Navigation";
-import RepoList from "./RepoList";
-import SearchedUsersList from "./SearchedUsersList";
-import SearchProvider from "./SearchContext";
+import RepoList from "./Repo/RepoList";
+import SearchedUsersList from "./Users/SearchedUsersList";
+import SearchProvider from "./Context/SearchContext";
 import "./App.scss";
 
 export default function App() {

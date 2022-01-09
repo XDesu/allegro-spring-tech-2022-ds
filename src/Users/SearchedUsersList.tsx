@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
-import { useSearch } from "./SearchContext";
+import { useSearch } from "../Context/SearchContext";
 import { Octokit } from "@octokit/rest";
 import { Endpoints } from "@octokit/types";
 import { RiGithubFill } from "react-icons/ri";

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Octokit } from "@octokit/rest";
 import { Endpoints } from "@octokit/types";
-import { Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
+import { Col, Container, Row, Spinner } from "react-bootstrap";
 import UserCardRepos from "./UserCardRepos";
 import RepoCardRepos from "./RepoCardRepos";
 import PaginationForRepos from "./PaginationForRepos";

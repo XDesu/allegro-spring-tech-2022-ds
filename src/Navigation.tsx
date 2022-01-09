@@ -6,7 +6,7 @@ import {
   Button,
   Nav,
 } from "react-bootstrap";
-import { useSearchUpdate } from "./SearchContext";
+import { useSearchUpdate } from "./Context/SearchContext";
 import React, { useState } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
