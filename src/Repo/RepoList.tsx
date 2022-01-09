@@ -83,12 +83,12 @@ const RepoList = () => {
   };
 
   return (
-    <Container fluid className="p-0">
+    <Container className="p-0">
       <Row className="justify-content-center mt-4 ms-2">
         <Col
-          sm="10"
+          sm="12"
           md="4"
-          lg="3"
+          lg="4"
           xl="3"
           xxl="3"
           //   style={{ backgroundColor: "blue" }}
@@ -105,7 +105,7 @@ const RepoList = () => {
             <UserCardRepos user={user} />
           )}
         </Col>
-        <Col sm="10" md="8" lg="8" xl="6" xxl="6">
+        <Col sm="12" md="7" lg="7" xl="9" xxl="9">
           {repos === undefined ? (
             <>
               Repozytoria użytkownika

@@ -9,7 +9,10 @@ export default function RepoCardRepos({ repos }: { repos: GitRepo[] }) {
   return (
     <Container fluid className="p-0 d-flex flex-wrap">
       {repos.map((repo) => (
-        <Card style={{ width: "12rem", height: "18rem" }} className="m-2">
+        <Card
+          style={{ width: "12rem", height: "18rem" }}
+          className="m-2 ms-auto me-auto"
+        >
           <Card.Body>
             <Card.Title className="overflow-hidden" style={{ height: "3rem" }}>
               {repo.name}

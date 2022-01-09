@@ -9,7 +9,7 @@ type GitUser = Endpoints["GET /users/{username}"]["response"]["data"];
 
 export default function UserCardRepos({ user }: { user: GitUser }) {
   return (
-    <Card style={{ width: "18rem" }} className="p-2">
+    <Card style={{ width: "18rem" }} className="p-2 ms-auto me-auto mb-sm-4">
       <Card.Img variant="top" src={user?.avatar_url as string} />
       <Card.Body className="pb-0">
         <Card.Title>{user?.name as string}</Card.Title>
@@ -29,15 +29,15 @@ export default function UserCardRepos({ user }: { user: GitUser }) {
           </ListGroup.Item>
           <ListGroup.Item>
             <RiGitRepositoryLine className="fs-3" />
-            {user?.public_repos} repozytoria
+            {user?.public_repos} Repozytoria
           </ListGroup.Item>
           <ListGroup.Item>
             <BsPeople className="fs-3" />
-            Obserwujący {user?.followers}
+            {user?.followers} Obserwujący
           </ListGroup.Item>
           <ListGroup.Item>
             <BsPerson className="fs-3" />
-            Obserwuje: {user?.following}
+            {user?.following} Obserwuje
           </ListGroup.Item>
           <ListGroup.Item className="pb-0">
             {user?.blog ? (
