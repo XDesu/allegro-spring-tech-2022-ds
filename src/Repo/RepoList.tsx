@@ -113,15 +113,15 @@ const RepoList = () => {
   };
 
   return (
-    <Container className="p-0">
-      <Row className="justify-content-center mt-4 ms-2">
+    <Container className="p-0 w-100">
+      <Row className="justify-content-center m-0 mt-4 w-100">
         <Col sm="12" md="4" lg="4" xl="3" xxl="3" className="text-center">
           {/*
               jeżeli zmienna user jest pusta to wyświetlany jest 'ekran ładowania danych'
               w przeciwnym wypadku wyświetlany jest panel z danymi użytkownika
             */}
           {user === undefined ? (
-            <Container>
+            <Container className="p-0">
               <Spinner animation="border" role="status" className="s-50 t-50">
                 <span className="visually-hidden">Loading...</span>
               </Spinner>
@@ -156,7 +156,7 @@ const RepoList = () => {
               </Container>
             )
           ) : (
-            <Container className="justify-content-center">
+            <Container className="justify-content-center p-0">
               <RepoCardRepos repos={repos} />
               <PaginationForRepos
                 activePage={pagePagin}

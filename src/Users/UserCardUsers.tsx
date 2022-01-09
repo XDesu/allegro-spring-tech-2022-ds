@@ -11,7 +11,14 @@ export default function UserCardUsers({ items }: { items: GitUser[] }) {
     */
 
   return (
-    <Row xs={1} md={2} lg={3} xl={4} xxl={5} className="justify-content-center">
+    <Row
+      xs={1}
+      md={2}
+      lg={3}
+      xl={4}
+      xxl={5}
+      className="justify-content-center w-100"
+    >
       {
         //mapowanie na tablicę items
       }

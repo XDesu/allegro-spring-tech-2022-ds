@@ -9,7 +9,7 @@ import "./App.scss";
 
 export default function App() {
   return (
-    <Container fluid className="p-0" style={{ backgroundColor: "#eceff1" }}>
+    <Container fluid className="p-0 m-0" style={{ backgroundColor: "#eceff1" }}>
       <SearchProvider>
         <Router>
           <header>

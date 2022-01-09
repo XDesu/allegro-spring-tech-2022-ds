@@ -15,9 +15,6 @@ export default function PaginationForRepos({
 
   if (activePage >= 4) {
     items.push(
-      <Pagination.First key="first" onClick={() => onPageChange(1)} />
-    );
-    items.push(
       <Pagination.Prev
         key="prev"
         onClick={() => onPageChange(activePage - 1)}
@@ -31,9 +28,6 @@ export default function PaginationForRepos({
     items.push(<Pagination.Ellipsis key="ellipsis1" />);
   } else {
     if (activePage > 1) {
-      items.push(
-        <Pagination.First key="first" onClick={() => onPageChange(1)} />
-      );
       items.push(
         <Pagination.Prev
           key="prev"
@@ -83,9 +77,6 @@ export default function PaginationForRepos({
         key="next"
         onClick={() => onPageChange(activePage + 1)}
       />
-    );
-    items.push(
-      <Pagination.Last key="last" onClick={() => onPageChange(totalPages)} />
     );
   } else {
     if (activePage < totalPages) {
