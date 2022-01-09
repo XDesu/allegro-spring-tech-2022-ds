@@ -26,5 +26,9 @@ export default function PaginationForRepos({
     );
   }
 
-  return <Pagination size="sm">{items}</Pagination>;
+  return (
+    <Pagination size="lg" className="mt-3 justify-content-center ">
+      {items}
+    </Pagination>
+  );
 }

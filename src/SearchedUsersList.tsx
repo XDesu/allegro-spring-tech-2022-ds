@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
-import { useSearch, useSearchUpdate } from "./SearchContext";
+import { useSearch } from "./SearchContext";
 import { Octokit } from "@octokit/rest";
 import { Endpoints } from "@octokit/types";
 import { RiGithubFill } from "react-icons/ri";
@@ -14,9 +14,13 @@ export default function SearchedUsersList() {
   const octokit = new Octokit();
 
   const [items, setItems] = useState<GitUser[]>([]);
+  const [timer, setTimer] = useState<any>(null);
 
   useEffect(() => {
     getUsers();
+    return () => {
+      clearTimeout(timer);
+    };
   }, [search]);
 
   const getUsers = async () => {
@@ -27,14 +31,26 @@ export default function SearchedUsersList() {
       });
       setItems(response.data.items);
       console.log(response);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
+      setTimer(
+        setTimeout(() => {
+          getUsers();
+        }, 5000)
+      );
     }
   };
 
   return (
     <Container fluid className="p-1 text-center d-flex flex-wrap">
-      <Row xs={1} md={2} lg={3} xl={4} xxl={5}>
+      <Row
+        xs={1}
+        md={2}
+        lg={3}
+        xl={4}
+        xxl={5}
+        className="justify-content-center"
+      >
         {items.map((item) => (
           <Col key={item.id}>
             <Card

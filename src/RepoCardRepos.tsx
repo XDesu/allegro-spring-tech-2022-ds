@@ -9,9 +9,11 @@ export default function RepoCardRepos({ repos }: { repos: GitRepo[] }) {
   return (
     <Container fluid className="p-0 d-flex flex-wrap">
       {repos.map((repo) => (
-        <Card style={{ width: "12rem", height: "18rem" }} className="m-3">
+        <Card style={{ width: "12rem", height: "18rem" }} className="m-2">
           <Card.Body>
-            <Card.Title>{repo.name}</Card.Title>
+            <Card.Title className="overflow-hidden" style={{ height: "3rem" }}>
+              {repo.name}
+            </Card.Title>
             <Card.Subtitle className="mb-2 text-muted">
               <AiFillStar />
               {repo.stargazers_count}

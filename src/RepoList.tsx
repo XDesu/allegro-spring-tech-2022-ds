@@ -24,6 +24,9 @@ const RepoList = () => {
 
   useEffect(() => {
     getUser();
+  }, [urlName]);
+
+  useEffect(() => {
     return () => {
       clearTimeout(timerUser);
       clearTimeout(timerRepos);
@@ -36,6 +39,7 @@ const RepoList = () => {
 
   const getUser = async () => {
     clearTimeout(timerUser);
+
     try {
       const responseUser = await octokit.rest.users.getByUsername({
         username: urlName,
@@ -49,6 +53,7 @@ const RepoList = () => {
       console.log(error);
       setTimerUser(
         setTimeout(() => {
+          console.log("timeout");
           getUser();
         }, 5000)
       );
@@ -76,10 +81,10 @@ const RepoList = () => {
       );
     }
   };
-  console.log(iPagin);
+
   return (
     <Container fluid className="p-0">
-      <Row className="justify-content-center">
+      <Row className="justify-content-center mt-4 ms-2">
         <Col
           sm="10"
           md="4"
@@ -100,7 +105,7 @@ const RepoList = () => {
             <UserCardRepos user={user} />
           )}
         </Col>
-        <Col sm="10" md="6" lg="6" xl="6" xxl="6">
+        <Col sm="10" md="8" lg="8" xl="6" xxl="6">
           {repos === undefined ? (
             <>
               Repozytoria użytkownika
@@ -109,9 +114,8 @@ const RepoList = () => {
               </Spinner>
             </>
           ) : (
-            <>
+            <Container className="justify-content-center">
               <RepoCardRepos repos={repos} />
-              {console.log(iPagin)}
               <PaginationForRepos
                 activePage={pagePagin}
                 totalPages={iPagin}
@@ -119,7 +123,7 @@ const RepoList = () => {
                   setPagePagin(page);
                 }}
               />
-            </>
+            </Container>
           )}
         </Col>
       </Row>
