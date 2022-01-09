@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Octokit } from "@octokit/rest";
 import { Endpoints } from "@octokit/types";
-import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
+import { Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import UserCardRepos from "./UserCardRepos";
 
 type GitUser = Endpoints["GET /users/{username}"]["response"]["data"];
@@ -10,14 +10,13 @@ type GitRepo =
 
 const RepoList = () => {
   const urlName = window.location.pathname.split("/")[2];
-  console.log(urlName);
-
   const octokit = new Octokit();
 
   const [repos, setRepos] = useState<GitRepo[]>([]);
   const [user, setUser] = useState<GitUser>();
   const [timerUser, setTimerUser] = useState<any>(null);
   const [timerRepos, setTimerRepos] = useState<any>(null);
+  const [iPagin, setIPagin] = useState<number>(1);
 
   useEffect(() => {
     getUser();
@@ -35,6 +34,7 @@ const RepoList = () => {
         username: urlName,
       });
       setUser(responseUser.data);
+      setIPagin(Math.ceil((user?.public_repos as number) / 9));
       console.log(responseUser);
     } catch (error) {
       console.log(error);
@@ -45,7 +45,6 @@ const RepoList = () => {
       );
     }
   };
-  console.log(user);
 
   const getRepos = async () => {
     clearTimeout(timerRepos);
@@ -54,8 +53,8 @@ const RepoList = () => {
         q: `user:${urlName}+fork:true`,
         sort: `stars`,
         order: `desc`,
-        per_page: 15,
-        page: 2,
+        per_page: 9,
+        page: iPagin,
       });
       setRepos(responseRepos.data.items);
       console.log(responseRepos);
@@ -69,14 +68,12 @@ const RepoList = () => {
     }
   };
 
-  console.log(repos);
-
   return (
     <Container fluid className="p-0">
       <Row className="justify-content-center">
         <Col
           sm="10"
-          md="3"
+          md="4"
           lg="3"
           xl="3"
           xxl="3"
@@ -94,19 +91,34 @@ const RepoList = () => {
             <UserCardRepos user={user} />
           )}
         </Col>
-        <Col
-          sm="10"
-          md="6"
-          lg="6"
-          xl="6"
-          xxl="6"
-          style={{ backgroundColor: "yellow" }}
-        >
-          sadasdasdasd
+        <Col sm="10" md="6" lg="6" xl="6" xxl="6">
+          <Container fluid className="p-0 d-flex flex-wrap">
+            {repos.map((repo) => (
+              <Card style={{ width: "12rem", height: "18rem" }} className="m-3">
+                <Card.Body>
+                  <Card.Title>{repo.name}</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">
+                    {repo.stargazers_count}
+                  </Card.Subtitle>
+                  <Card.Text
+                    className="overflow-auto"
+                    style={{ height: "9rem" }}
+                  >
+                    {repo.description === null
+                      ? "Brak opisu"
+                      : repo.description}
+                  </Card.Text>
+                  <Container className="text-center">
+                    <Button href={repo.html_url} className="px-2">
+                      Zobacz repo
+                    </Button>
+                  </Container>
+                </Card.Body>
+              </Card>
+            ))}
+          </Container>
         </Col>
       </Row>
-      <Button onClick={getUser}>Click</Button>
-      <Button onClick={getRepos}>Click</Button>
     </Container>
 
     // reader();
