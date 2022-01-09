@@ -6,16 +6,25 @@ import {
   Button,
   Nav,
 } from "react-bootstrap";
-import { useSearchUpdate } from "./Context/SearchContext";
+import { useSearchUpdate } from "../Context/SearchContext";
 import React, { useState } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const Navigation = () => {
+  /*
+    funkcja odpowiedzialna za wyświetlanie paska nawigacji, 
+    gdzie znajduje się pole wyszukiwania
+  */
+
   const navigate = useNavigate();
   const searchUpdate = useSearchUpdate();
   const [search, setSearch] = useState("allegro");
 
+  /*
+    funckja odpowiedzialna za aktualizację Contextu
+    oraz za przejście do wyszukiwania użytkowników 
+  */
   function updateSearch(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     searchUpdate(search);
@@ -23,7 +32,7 @@ const Navigation = () => {
   }
 
   return (
-    <Navbar collapseOnSelect bg="dark" variant="dark" expand="sm">
+    <Navbar collapseOnSelect bg="white" variant="light" expand="sm">
       <Container fluid>
         <LinkContainer to="/">
           <Navbar.Brand className="m-3 fs-2">
@@ -50,7 +59,7 @@ const Navigation = () => {
                   onClick={(e) => setSearch("")}
                 />
               </FloatingLabel>
-              <Button type="submit" variant="success">
+              <Button type="submit" variant="primary" className="ms-2">
                 Szukaj
               </Button>
             </Form>

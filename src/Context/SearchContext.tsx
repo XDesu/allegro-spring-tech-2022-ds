@@ -7,11 +7,13 @@ import React, {
 } from "react";
 
 const SearchContext = React.createContext("allegro");
+
 const SearchUpdateContext = React.createContext<
   Dispatch<SetStateAction<string>>
 >(() => {});
 
 const SearchProvider: FC = ({ children }) => {
+  // funkcja przechowująca wartośc wpisywaną w polu wyszukiwania - nazwa użytkownika
   const [search, setSearch] = useState("allegro");
 
   return (

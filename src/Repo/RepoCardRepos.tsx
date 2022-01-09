@@ -6,6 +6,9 @@ type GitRepo =
   Endpoints["GET /search/repositories"]["response"]["data"]["items"][0];
 
 export default function RepoCardRepos({ repos }: { repos: GitRepo[] }) {
+  /*
+    funckja odpowiedzialna za wyswietlanie kart repozytoriow
+  */
   return (
     <Container fluid className="p-0 d-flex flex-wrap">
       {repos.map((repo) => (

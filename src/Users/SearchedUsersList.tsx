@@ -16,16 +16,31 @@ export default function SearchedUsersList() {
   const [timer, setTimer] = useState<any>(null);
   const [error, setError] = useState<boolean>(false);
 
+  /*
+    jeżeli search się zmieni 
+    to zostanie wywołana funkcja pobierająca dane użytkownika
+  */
   useEffect(() => {
     getUsers();
   }, [search]);
 
+  /*
+    funkcja odpowiedzialna za zabespieczenie pobierania danych użytkownika -
+    - clearTimeout
+  */
   useEffect(() => {
     return () => {
       clearTimeout(timer);
     };
   }, []);
 
+  /*
+    funkcja odpowiedzialna za pobieranie danych użytkowników
+    gdy zostaną pobrani użytkownicy są przypisywani do zmiennej items
+    oraz zmienna error zostanie ustawiona na false
+    w przypadku błędu zostanie ona ustawiona na true
+    i zostanie wywołana po 5 sekundach funkcja pobierająca dane użytkownika
+  */
   const getUsers = async () => {
     try {
       const response = await octokit.rest.search.users({
@@ -48,6 +63,13 @@ export default function SearchedUsersList() {
 
   return (
     <Container fluid className="p-1 text-center pt-5">
+      {/*
+          jeżeli długośc tacy items jest weiększa od 0 
+          to zostaną wyświetlone karty użytkowników
+          w przeciwnym wypadku gdy error jest true 
+          to wyświetlany jest ekran ładowania danych
+          a jeżeli nie to wyświetlamy komunikat o braku użytkowników
+        */}
       {items.length > 0 ? (
         <UserCardUsers items={items} />
       ) : error ? (

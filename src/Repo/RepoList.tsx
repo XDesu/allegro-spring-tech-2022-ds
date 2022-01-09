@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Octokit } from "@octokit/rest";
 import { Endpoints } from "@octokit/types";
-import { Col, Container, Row, Spinner } from "react-bootstrap";
+import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import UserCardRepos from "./UserCardRepos";
 import RepoCardRepos from "./RepoCardRepos";
 import PaginationForRepos from "./PaginationForRepos";
@@ -11,6 +11,10 @@ type GitRepo =
   Endpoints["GET /search/repositories"]["response"]["data"]["items"][0];
 
 const RepoList = () => {
+  /*
+  funkcja odpowiedzialna za wyświetlenie panelu z repozytoriami
+  */
+
   let reposOnPage = 10;
   const urlName = window.location.pathname.split("/")[2];
   const octokit = new Octokit();
@@ -23,6 +27,7 @@ const RepoList = () => {
   const [pagePagin, setPagePagin] = useState<number>(1);
   const [error, setError] = useState<boolean>(false);
 
+  // wywołanie funkcji pobierającej dane użytkownika
   useEffect(() => {
     getUser();
   }, [urlName]);
@@ -34,10 +39,23 @@ const RepoList = () => {
     };
   }, []);
 
+  /* 
+    wywołanie funkcji pobierającej repozytoria użytkownika
+    gdy zostanie pobrany użytkownik
+    lub zostanie zmieniony numer strony 
+  */
+
   useEffect(() => {
     getRepos();
   }, [pagePagin, iPagin]);
 
+  /*
+    funkcja odpowiedzialna za pobieranie danych użytkownika
+    gdy zostanie pobrany użytkownik jest przypisywany do zmiennej user
+    oraz zostanie określona wartość zmiennej iPagin 
+    określającej ilość stron z repozytoriami
+    jeżlei zapytanie się nie powiedzie to zostanie ono ponowione po 5 sekundach 
+  */
   const getUser = async () => {
     clearTimeout(timerUser);
 
@@ -45,7 +63,6 @@ const RepoList = () => {
       const responseUser = await octokit.rest.users.getByUsername({
         username: urlName,
       });
-      setError(false);
       setUser(responseUser.data);
       setIPagin(
         Math.ceil((responseUser.data.public_repos as number) / reposOnPage)
@@ -53,7 +70,6 @@ const RepoList = () => {
       console.log(responseUser);
     } catch (error) {
       console.log(error);
-      setError(true);
       setTimerUser(
         setTimeout(() => {
           console.log("timeout");
@@ -63,6 +79,13 @@ const RepoList = () => {
     }
   };
 
+  /*
+    funkcja odpowiadająca za pobieranie repozytoriów użytkownika
+    gdy zostanie pobrany użytkownik to zostaje przypisany do zmiennej repos
+    a zmienna error zostaje ustawiona na false
+    jeżeli zapytanie się nie powiedzie to zostaje ono ponowione po 5 sekundach
+    a jeżeli błąd miał status 422 to zmienna error zostaje ustawiona na true
+  */
   const getRepos = async () => {
     clearTimeout(timerRepos);
     try {
@@ -74,9 +97,13 @@ const RepoList = () => {
         page: pagePagin,
       });
       setRepos(responseRepos.data.items);
+      setError(false);
       console.log(responseRepos);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      if (error?.status === 422) {
+        setError(true);
+      }
       setTimerRepos(
         setTimeout(() => {
           getRepos();
@@ -88,15 +115,11 @@ const RepoList = () => {
   return (
     <Container className="p-0">
       <Row className="justify-content-center mt-4 ms-2">
-        <Col
-          sm="12"
-          md="4"
-          lg="4"
-          xl="3"
-          xxl="3"
-          //   style={{ backgroundColor: "blue" }}
-          className="text-center"
-        >
+        <Col sm="12" md="4" lg="4" xl="3" xxl="3" className="text-center">
+          {/*
+              jeżeli zmienna user jest pusta to wyświetlany jest 'ekran ładowania danych'
+              w przeciwnym wypadku wyświetlany jest panel z danymi użytkownika
+            */}
           {user === undefined ? (
             <Container>
               <Spinner animation="border" role="status" className="s-50 t-50">
@@ -110,6 +133,14 @@ const RepoList = () => {
           )}
         </Col>
         <Col sm="12" md="7" lg="7" xl="9" xxl="9">
+          {/*
+              jeżeli zmienna repos jest pusta a zmienna error jest false 
+              to wyświetlany jest 'ekran ładowania danych'
+              jeżeli zmienna repos jest pusta a zmienna error jest true
+              to wyświetlany jest 'brak repozytoriów'
+              w przeciwnym wypadku wyświetlany jest panel z repozytoriami
+              i przyciski do nawigacji
+            */}
           {repos.length == 0 ? (
             error ? (
               <Container className="w-100 text-center pt-4">

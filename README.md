@@ -1,46 +1,40 @@
-# Getting Started with Create React App
+# Zadanie nr 2. Frontend Software Engineer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Instrukcja
 
-## Available Scripts
-
-In the project directory, you can run:
+Uruchomienie aplikacji
 
 ### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Uruchomi aplikację w trybie deweloperskim.
+Wejdź na [http://localhost:3000](http://localhost:3000) aby zobaczyć stronę.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Strona będzie się przeładowywać w sytuacji jakiejkolwiek edycji.
 
-### `yarn test`
+W lini konsoli będą wyświetlane wszelkie błędy.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Opis aplikacji
 
-### `yarn build`
+Aplikacja stworzona na potrzeby Allegro Spring Tech.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Aplikacja napisana w oparciu o bibliotekę React.js, przy czym językiem programowania był TypeScript.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Aplikacja pozwala nam na wyszukanie do 15 użytkowników spełniających nasze warunki (podaną nazwę użytkownika w belce nawigacji), a następnie po wybraniu jednego z pokazanych kont wyświetlenie jego publicznych repozytoriów posortowanych malejąco po ilości gwiazdek.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Ze względu na korzystanie z API udostępnianego przez GitHub, ilość zapytań jest ograniczana czasowo.
 
-### `yarn eject`
+Podczas tworzenia aplikacji starałem się aby była schludna a kolorystycznie pasowała do barw allegro. Nie wprowadzałem również żadnych dodatkowych zmian w zakresie CSS, starając się w 100% wykorzystać możliwości dawane przez bibliotekę Bootstrap oraz React Bootstrap.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Szukana wartość jest przechowywana w osobnym kontekście w celu łatwego dostępu do tej wartości dla innych komponentów.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+W panelu z wyszukanymi użytkownikami wyświetlanych jest maksymalnie 15 osób, z czego są oni posortowani w kolejności najlepszego dopasowania.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Po wciśnięciu przycisku repozytoria przechodzimy do części z repozytoriami.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+W panelu z repozytoriami mamy 3 komponenty, z których pierwszy odpowiada za wyświetlenie karty wskazanego użytkownika (nazwa użytkownika jest przenoszona w adresie url), a dwa następne za wyświetlanie karty z jego publicznymi repozytoriami oraz paska wyboru strony z kartami repozytoriów.
 
-## Learn More
+Karta użytkownika dla repozytoriów zawiera więcej danych, w tym, jeżeli jest podany blog to wyświetla przycisk przekierowujący na tą stronę.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Karta repozytorium zawiera jego nazwę, ilość gwiazdek, jego opis oraz przycisk pozwalający przejść do wskazanego repozytorium na stronie githuba.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Pasek wyboru strony pozwala nam na pokazanie określonej części repozytoriów, gdzie wygląd paska zmienia się w zależności od aktualnej strony oraz samej ilości stron.

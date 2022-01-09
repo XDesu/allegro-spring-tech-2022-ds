@@ -8,6 +8,10 @@ import { Endpoints } from "@octokit/types";
 type GitUser = Endpoints["GET /users/{username}"]["response"]["data"];
 
 export default function UserCardRepos({ user }: { user: GitUser }) {
+  /*
+  funckja odpowiedzialna za wyswietlanie karty użytkownika dla panelu z repozytoriami
+  */
+
   return (
     <Card style={{ width: "18rem" }} className="p-2 ms-auto me-auto mb-sm-4">
       <Card.Img variant="top" src={user?.avatar_url as string} />
@@ -16,6 +20,10 @@ export default function UserCardRepos({ user }: { user: GitUser }) {
         <Card.Text>{user?.bio as string}</Card.Text>
         <ListGroup variant="flush" className="text-center pb-0">
           <ListGroup.Item className="pt-0">
+            {/*
+                jeżeli użytkownik jest użytkownikiem to wyświetl ikonkę użytkownika
+                w przeciwnym wypadku wyświetl ikonkę organizacji
+              */}
             {user?.type === "User" ? (
               <>
                 <BiUser className="fs-3" /> Użytkownik
@@ -44,7 +52,6 @@ export default function UserCardRepos({ user }: { user: GitUser }) {
               <Button href={user.blog as string}>Strona internetowa</Button>
             ) : null}
           </ListGroup.Item>
-          {/* {user?.blog && <Button href={user.blog as string}>Blog</Button>} */}
         </ListGroup>
       </Card.Body>
     </Card>

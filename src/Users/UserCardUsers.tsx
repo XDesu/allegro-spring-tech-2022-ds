@@ -6,8 +6,15 @@ import { LinkContainer } from "react-router-bootstrap";
 type GitUser = Endpoints["GET /search/users"]["response"]["data"]["items"][0];
 
 export default function UserCardUsers({ items }: { items: GitUser[] }) {
+  /*
+        funckja odpowiedzialna za wyswietlanie kart użytkowników
+    */
+
   return (
     <Row xs={1} md={2} lg={3} xl={4} xxl={5} className="justify-content-center">
+      {
+        //mapowanie na tablicę items
+      }
       {items.map((item) => (
         <Col key={item.id} className="">
           <Card
@@ -29,6 +36,10 @@ export default function UserCardUsers({ items }: { items: GitUser[] }) {
                 </a>
               </Card.Title>
               <Card.Text>
+                {
+                  // jeżeli typ uzytkownika to user wyświetl ikonkę użytkownika
+                  // inaczej wyświetl ikonkę organizacji
+                }
                 {item.type === "User" ? "Użytkownik" : "Organizacja"}
               </Card.Text>
               <LinkContainer to={`/repos/${item.login}`}>
