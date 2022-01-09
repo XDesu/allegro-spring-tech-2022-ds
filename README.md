@@ -1,10 +1,18 @@
 # Zadanie nr 2. Frontend Software Engineer
 
+### Damian Szczeciński
+
 ## Instrukcja
 
-Uruchomienie aplikacji
+Aby uruchomić aplikację należy najpierw zainstalować zależności:
 
-### `yarn start`
+`npm install`
+lub
+`yarn install`
+
+Uruchomienie aplikacji:
+
+`npm run start` lub `yarn start`
 
 Uruchomi aplikację w trybie deweloperskim.
 Wejdź na [http://localhost:3000](http://localhost:3000) aby zobaczyć stronę.
