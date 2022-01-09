@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Octokit } from "@octokit/rest";
 import { Endpoints } from "@octokit/types";
-import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
-import { RiGitRepositoryLine } from "react-icons/ri";
-import { BsPeople, BsPerson } from "react-icons/bs";
-import { VscOrganization } from "react-icons/vsc";
-import { BiUser } from "react-icons/bi";
+import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
+import UserCardRepos from "./UserCardRepos";
 
 type GitUser = Endpoints["GET /users/{username}"]["response"]["data"];
 type GitRepo =
@@ -19,8 +16,20 @@ const RepoList = () => {
 
   const [repos, setRepos] = useState<GitRepo[]>([]);
   const [user, setUser] = useState<GitUser>();
+  const [timerUser, setTimerUser] = useState<any>(null);
+  const [timerRepos, setTimerRepos] = useState<any>(null);
+
+  useEffect(() => {
+    getUser();
+    getRepos();
+    return () => {
+      clearTimeout(timerUser);
+      clearTimeout(timerRepos);
+    };
+  }, []);
 
   const getUser = async () => {
+    clearTimeout(timerUser);
     try {
       const responseUser = await octokit.rest.users.getByUsername({
         username: urlName,
@@ -29,11 +38,17 @@ const RepoList = () => {
       console.log(responseUser);
     } catch (error) {
       console.log(error);
+      setTimerUser(
+        setTimeout(() => {
+          getUser();
+        }, 5000)
+      );
     }
   };
   console.log(user);
 
   const getRepos = async () => {
+    clearTimeout(timerRepos);
     try {
       const responseRepos = await octokit.rest.search.repos({
         q: `user:${urlName}+fork:true`,
@@ -46,10 +61,16 @@ const RepoList = () => {
       console.log(responseRepos);
     } catch (error) {
       console.log(error);
+      setTimerRepos(
+        setTimeout(() => {
+          getRepos();
+        }, 5000)
+      );
     }
   };
 
   console.log(repos);
+
   return (
     <Container fluid className="p-0">
       <Row className="justify-content-center">
@@ -60,48 +81,18 @@ const RepoList = () => {
           xl="3"
           xxl="3"
           //   style={{ backgroundColor: "blue" }}
+          className="text-center"
         >
-          <Card style={{ width: "18rem" }} className="p-2">
-            <Card.Img variant="top" src={user?.avatar_url as string} />
-            <Card.Body className="pb-0">
-              <Card.Title>{user?.name as string}</Card.Title>
-              <Card.Text>{user?.bio as string}</Card.Text>
-              <ListGroup variant="flush" className="text-center pb-0">
-                <ListGroup.Item className="pt-0">
-                  {user?.type === "User" ? (
-                    <>
-                      <BiUser className="fs-3" /> Użytkownik
-                    </>
-                  ) : (
-                    <>
-                      <VscOrganization className="fs-3" />
-                      Organizacja
-                    </>
-                  )}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <RiGitRepositoryLine className="fs-3" />
-                  {user?.public_repos} repozytoria
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <BsPeople className="fs-3" />
-                  Obserwujący {user?.followers}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <BsPerson className="fs-3" />
-                  Obserwuje: {user?.following}
-                </ListGroup.Item>
-                <ListGroup.Item className="pb-0">
-                  {user?.blog ? (
-                    <Button href={user.blog as string}>
-                      Strona internetowa
-                    </Button>
-                  ) : null}
-                </ListGroup.Item>
-                {/* {user?.blog && <Button href={user.blog as string}>Blog</Button>} */}
-              </ListGroup>
-            </Card.Body>
-          </Card>
+          {user === undefined ? (
+            <>
+              Karta użytkownika
+              <Spinner animation="border" role="status" className="s-50 t-50">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </>
+          ) : (
+            <UserCardRepos user={user} />
+          )}
         </Col>
         <Col
           sm="10"
