@@ -1,10 +1,16 @@
 import { Pagination } from "react-bootstrap";
 
-export default function PaginationForRepos(
-  activePage: number,
-  totalPages: number,
-  onPageChange: (page: number) => void
-) {
+interface PaginationForReposProps {
+  activePage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}
+
+export default function PaginationForRepos({
+  activePage,
+  totalPages,
+  onPageChange,
+}: PaginationForReposProps) {
   let items = [];
   for (let number = 1; number <= totalPages; number++) {
     items.push(

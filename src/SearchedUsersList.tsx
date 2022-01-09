@@ -22,7 +22,7 @@ export default function SearchedUsersList() {
   const getUsers = async () => {
     try {
       const response = await octokit.rest.search.users({
-        q: search,
+        q: `${search} in:login`,
         per_page: 15,
       });
       setItems(response.data.items);

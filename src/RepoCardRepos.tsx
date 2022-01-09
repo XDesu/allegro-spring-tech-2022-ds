@@ -16,7 +16,7 @@ export default function RepoCardRepos({ repos }: { repos: GitRepo[] }) {
               <AiFillStar />
               {repo.stargazers_count}
             </Card.Subtitle>
-            <Card.Text className="overflow-auto" style={{ height: "9rem" }}>
+            <Card.Text className="overflow-auto" style={{ height: "8rem" }}>
               {repo.description === null ? "Brak opisu" : repo.description}
             </Card.Text>
             <Container className="text-center">

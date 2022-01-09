@@ -4,12 +4,14 @@ import { Endpoints } from "@octokit/types";
 import { Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import UserCardRepos from "./UserCardRepos";
 import RepoCardRepos from "./RepoCardRepos";
+import PaginationForRepos from "./PaginationForRepos";
 
 type GitUser = Endpoints["GET /users/{username}"]["response"]["data"];
 type GitRepo =
   Endpoints["GET /search/repositories"]["response"]["data"]["items"][0];
 
 const RepoList = () => {
+  let reposOnPage = 10;
   const urlName = window.location.pathname.split("/")[2];
   const octokit = new Octokit();
 
@@ -18,15 +20,19 @@ const RepoList = () => {
   const [timerUser, setTimerUser] = useState<any>(null);
   const [timerRepos, setTimerRepos] = useState<any>(null);
   const [iPagin, setIPagin] = useState<number>(1);
+  const [pagePagin, setPagePagin] = useState<number>(1);
 
   useEffect(() => {
     getUser();
-    getRepos();
     return () => {
       clearTimeout(timerUser);
       clearTimeout(timerRepos);
     };
   }, []);
+
+  useEffect(() => {
+    getRepos();
+  }, [pagePagin, iPagin]);
 
   const getUser = async () => {
     clearTimeout(timerUser);
@@ -35,7 +41,9 @@ const RepoList = () => {
         username: urlName,
       });
       setUser(responseUser.data);
-      setIPagin(Math.ceil((user?.public_repos as number) / 9));
+      setIPagin(
+        Math.ceil((responseUser.data.public_repos as number) / reposOnPage)
+      );
       console.log(responseUser);
     } catch (error) {
       console.log(error);
@@ -54,8 +62,8 @@ const RepoList = () => {
         q: `user:${urlName}+fork:true`,
         sort: `stars`,
         order: `desc`,
-        per_page: 9,
-        page: iPagin,
+        per_page: reposOnPage,
+        page: pagePagin,
       });
       setRepos(responseRepos.data.items);
       console.log(responseRepos);
@@ -68,7 +76,7 @@ const RepoList = () => {
       );
     }
   };
-
+  console.log(iPagin);
   return (
     <Container fluid className="p-0">
       <Row className="justify-content-center">
@@ -101,7 +109,17 @@ const RepoList = () => {
               </Spinner>
             </>
           ) : (
-            <RepoCardRepos repos={repos} />
+            <>
+              <RepoCardRepos repos={repos} />
+              {console.log(iPagin)}
+              <PaginationForRepos
+                activePage={pagePagin}
+                totalPages={iPagin}
+                onPageChange={(page: number) => {
+                  setPagePagin(page);
+                }}
+              />
+            </>
           )}
         </Col>
       </Row>
