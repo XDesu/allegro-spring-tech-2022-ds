@@ -115,7 +115,7 @@ const RepoList = () => {
   return (
     <Container className="p-0 w-100">
       <Row className="justify-content-center m-0 mt-4 w-100">
-        <Col sm="12" md="4" lg="4" xl="3" xxl="3" className="text-center">
+        <Col sm="12" md="5" lg="4" xl="3" xxl="3" className="text-center">
           {/*
               jeżeli zmienna user jest pusta to wyświetlany jest 'ekran ładowania danych'
               w przeciwnym wypadku wyświetlany jest panel z danymi użytkownika
